@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= title
+  form#formLogIn(name="login",method="post",action="/loginverify")
+        input#inputE-mail(type="text", placeholder="Enter e-mail", name="username")
+        input#inputPassword(type="password", placeholder="Password", name="password")
+        button#btnLogin(type="submit") Log In

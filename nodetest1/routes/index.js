@@ -15,54 +15,34 @@ router.get('/helloworld', function(req, res) {
 
 /* GET New Info page. */
 router.get('/newinfo', function(req, res) {
-    res.render('newinfo', { title: 'Add New User' });
+    res.render('newinfo', { title: 'Add New Info' });
+});
+
+/*GET Sign Up page*/
+router.get('/signup', function(req, res) {
+    res.render('signup', { title: 'Add New User' });
+});
+
+/*GET Log In page*/
+router.get('/login', function(req, res){
+	res.render('login', {title: 'Enter your details'});
 });
 
 /* GET information page. */
  router.get('/information', function(req, res) {
-/*const stitch = require("mongodb-stitch")
-const client = new stitch.StitchClient('accinfo-flftv');
-const db = client.service('mongodb', 'mongodb-atlas').db('Info');
-client.login().then(() =>
-  db.collection('Info').find({},{})
-).then(docs => {
-	res.render('information', {
-            "information" : docs
-        });
-  console.log("Found docs", docs)
-  console.log("[MongoDB Stitch] Connected to Stitch")
-}).catch(err => {
-  console.error(err)
-}); */
-	MongoClient.connect(uri, function(err, db) {
-		//var db = req.db;
+		var db = req.db;
 		//var collection = db.get('Info');
 		db.collection('Info').find({},{},function(e,docs){
 			res.render('information', {
 				"information" : docs
 			}); 
 		}); 
-	});
+	
  });
 
-/* POST to Add User Service */
+/* POST to Add Info Service */
 router.post('/addinfo', function(req, res) {
-const stitch = require("mongodb-stitch")
-const client = new stitch.StitchClient('accinfo-flftv');
-const db = client.service('mongodb', 'mongodb-atlas').db('UserInfo');
-client.login().then(() =>
-  db.collection('Info').updateOne({owner_id: client.authedId()}, {$set:{number:42}}, {upsert:true})
-).then(() =>
-  db.collection('Info').find({owner_id: client.authedId()})
-).then(docs => {
-	res.render('information', {
-            "information" : docs
-        });
-  console.log("Found docs", docs)
-  console.log("[MongoDB Stitch] Connected to Stitch")
-}).catch(err => {
-  console.error(err)
-});
+
     // Set our internal DB variable
     var deb = req.db;
 
@@ -89,6 +69,66 @@ client.login().then(() =>
             res.redirect("information");
         }
     });
+});
+
+/* POST to Add User Service */
+router.post('/adduser', function(req, res) {
+
+    // Set our internal DB variable
+    var db = req.db;
+
+    // Get our form values. These rely on the "name" attributes
+    var firstname = req.body.firstname;
+	var lastname = req.body.lastname;
+	var email = req.body.email;
+    var passwd = req.body.passwd;
+	
+	db.collection('Users').findOne({"email" : email}, function(result){
+		if(null!=result){
+			console.log("USERNAME WITH THIS EMAIL ALREADY EXISTS:", result.username);
+			res.redirect("signup");
+		}
+		else{
+			var hash=bcrypt.hashSync(passwd, 8);
+			db.collection('Users').insert({
+				"email" : website,
+				"password" : passwd,
+				"firstname" : firstname,
+				"lastname" : lastname
+			}, function (err, doc) {
+				if (err) {
+					// If it failed, return error
+					res.send("There was a problem creating the account. Please try again later.");
+				}
+			else {
+				// And forward to success page
+				res.redirect("information");
+			}
+			});
+		}
+	}    
+});
+
+/* POST to Log In service*/
+router.post('/loginverify', function(req, res){
+	var db=req.db;
+	var email=req.body.email;
+	var passwd=req.body.passwd;
+	var hash=bcrypt.hashSync(passwd, 8);
+	
+	db.collection('Users').findOne({"email" : email}, function(result){
+		if(null!= result){
+			if(hash==result.passwd){
+				console.log("LOGIN SUCCESS FOR:", email);
+				app.use(function(req,res,next){
+					req.user = email;
+					next();
+				});
+				res.redirect("information");
+			}
+			else
+		}
+	});
 });
 
 module.exports = router;

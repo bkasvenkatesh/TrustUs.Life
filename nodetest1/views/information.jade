@@ -3,6 +3,7 @@ extends layout
 block content
     h1.
         User Info
+    p=information
     ul
         each user, i in information
-            li= i+ user.website+ user.username+ user.passwd
+            li= i+ user.website+ user.username+ user.password
