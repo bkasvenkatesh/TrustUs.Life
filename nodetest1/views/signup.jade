@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  form#formSignUp(name="signup",method="post",action="/adduser")
+        input#inputFirstName(type="text", placeholder="Enter first name", name="firstname")
+        input#inputLastName(type="text", placeholder="Enter Lastname", name="lastname")
+        input#inputE-mail(type="text", placeholder="Enter e-mail", name="email")
+        input#inputPassword(type="password", placeholder="password", name="passwd")
+        input#inputPassword2(type="password", placeholder="Re-type password", name="password2")
+        button#btnRegister(type="submit") Register
