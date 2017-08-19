@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var session = require('express-session');
 var mongo = require('mongodb');
 //var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
@@ -18,6 +18,15 @@ var users = require('./routes/users');
 
 var app = express();
 
+//app.use(express.cookieParser());
+
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -28,6 +37,22 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(function (req, res, next) {
+  // check if client sent cookie
+  var cookie = req.cookies.LoggedUser;
+  if (cookie === undefined)
+  {
+    // no: set a new cookie
+    res.cookie('LoggedUser',"None", { maxAge: 900000, httpOnly: true });
+    console.log('cookie created successfully');
+  } 
+  else
+  {
+    // yes, cookie was already present 
+    console.log('cookie exists', cookie);
+  } 
+  next(); // <-- important!
+});
 app.use(express.static(path.join(__dirname, 'public')));
 
 
