@@ -1,9 +1,19 @@
-extends layout
+header
+  title TrustUs.Life
 
-block content
+  link(rel="stylesheet", href="stylesheets/form.css")
+
+  meta(charset="UTF-8")
+body
   h1= title
   form#formAddUser(name="addinfo",method="post",action="/addinfo")
         input#inputWebsite(type="text", placeholder="website", name=website)
+        br
+        br
         input#inputUserName(type="text", placeholder="username", name="username")
+        br
+        br
         input#inputPassword(type="text", placeholder="password", name="passwd")
+        br
+        br
         button#btnSubmit(type="submit") submit

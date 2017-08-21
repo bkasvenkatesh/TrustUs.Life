@@ -1,17 +1,37 @@
 extends layout
 
 block content
-	h1.
-		User Info
-	each user, i in information
-		p #{i}+ #{user.website}+ #{user.username}+ #{user.password}
-	h2.
-		Add New Info
+	h1 User Info
+	table
+		tr
+			th
+				p S.no.
+			th
+				p Website
+			th
+				p Username
+			th
+				p Password
+		each user, i in information
+			tr
+				td
+					p #{i+1})
+				td
+					p #{user.website}
+				td
+					p #{user.username}
+				td
+					p #{user.password}
+	h2 Add New Info
 	form#formAddUser(name="addinfo",method="post",action="/addinfo")
 		input#inputWebsite(type="text", placeholder="website", name="website")
+		br
+		br
 		input#inputUserName(type="text", placeholder="username", name="username")
+		br
+		br
 		input#inputPassword(type="text", placeholder="password", name="passwd")
+		br
+		br
 		button#btnSubmit(type="submit") Submit
-	p 
-		a(href='/logout') Log Out
-		
+	a.logout(href='/logout') Log Out

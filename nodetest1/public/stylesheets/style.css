@@ -1,8 +1,43 @@
+@import "form.css";
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: white;
+  text-decoration: none;
+  font-size: 20px;
+  padding: 15px;
+}
+p{
+  font: 24px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+.logout{
+  color: black;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: #e86f51;
+   position:absolute;
+   top:10px;
+   right:10px;
+}
+.buton{
+  background-color: gray;
+  height: 150px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 25px;
+}
+.mainpage{
+  position: relative;
+  top: 10px;
+  left: 40%;
+}
+table,tr,th,td{
+  text-align: center;
+  padding: 10px;
+  border: 1px solid black;
+
 }

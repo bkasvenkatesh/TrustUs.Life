@@ -1,11 +1,25 @@
-extends layout
+header
+  title TrustUs.Life
 
-block content
+  link(rel="stylesheet", href="stylesheets/form.css")
+
+  meta(charset="UTF-8")
+body
   h1= title
   form#formSignUp(name="signup",method="post",action="/adduser")
         input#inputFirstName(type="text", placeholder="Enter first name", name="firstname")
+        br
+        br
         input#inputLastName(type="text", placeholder="Enter Lastname", name="lastname")
+        br
+        br
         input#inputE-mail(type="text", placeholder="Enter e-mail", name="email")
+        br
+        br
         input#inputPassword(type="password", placeholder="password", name="passwd")
+        br
+        br
         input#inputPassword2(type="password", placeholder="Re-type password", name="password2")
+        br
+        br
         button#btnRegister(type="submit") Register
