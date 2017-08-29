@@ -5,6 +5,8 @@ block content
 	table
 		tr
 			th
+				p
+			th
 				p S.no.
 			th
 				p Website
@@ -14,14 +16,20 @@ block content
 				p Password
 		each user, i in information
 			tr
-				td
-					p #{i+1})
-				td
-					p #{user.website}
-				td
-					p #{user.username}
-				td
-					p #{user.password}
+				form#formEditInfo(name="editinfo", method="get", action="/inputEdit")
+					td
+						input(type="hidden",name="row",value="#{user._id}")
+					td(contenteditable="true")
+						p #{i+1}
+					td
+						input#inputWebsite(type="text", placeholder="#{user.website}", name="website")
+					td
+						input#inputUserName(type="text", placeholder="#{user.username}", name="username")
+					td
+						input#inputPassword(type="text", placeholder="#{user.password}", name="passwd")
+					td
+						button#btnUpdate(type="submit") Edit
+			
 	h2 Add New Info
 	form#formAddUser(name="addinfo",method="post",action="/addinfo")
 		input#inputWebsite(type="text", placeholder="website", name="website")
