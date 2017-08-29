@@ -37,10 +37,10 @@ router.get('/logout', function(req, res){
 });
 
 /* GET information page. */
- router.get('/information', function(req, res) {
-	 var loggedUser = req.cookies.LoggedUser;
-	 if(loggedUser=="None")
-		 res.redirect("login");
+router.get('/information', function(req, res) {
+	var loggedUser = req.cookies.LoggedUser;
+	if(loggedUser=="None")
+		res.redirect("login");
 	MongoClient.connect(uri, function(err, db){
 		//var db = req.db;
 		var loggedUser = req.cookies.LoggedUser;
@@ -52,6 +52,44 @@ router.get('/logout', function(req, res){
 	});
  });
 
+ /* POST to Update Info Service */
+router.post('/updateinfo', function(req, res) {
+	var website = req.body.website;
+	var userName = req.body.username;
+	var passwd = req.body.passwd;
+	var id = req.body.row_id;
+	var ObjectId = require('mongodb').ObjectId;
+	var o_id = new ObjectId(id);
+	MongoClient.connect(uri, function(err, db){
+		db.collection('Info').updateOne({"_id" : o_id}, {
+			$set:{
+				"website" : website,
+				"username" : userName,
+				"password" : passwd
+			}
+		});
+		db.close();
+	});
+	res.redirect('information');
+});
+	
+/* POST to Edit Info page */
+router.post('/editinfo', function(req, res) {
+	var row_id=req.body.row;
+	var ObjectId = require('mongodb').ObjectId;
+	var o_id = new ObjectId(row_id);
+	console.log(o_id);
+	MongoClient.connect(uri, function(err, db){
+		db.collection('Info').findOne({"_id" : o_id}, function(e, doc){
+			console.log(doc);
+			res.render('editinfo', {
+				"row" : doc
+			});
+		});
+		db.close();
+	});
+});
+ 
 /* POST to Add Info Service */
 router.post('/addinfo', function(req, res) {
 	// Get our form values. These rely on the "name" attributes
