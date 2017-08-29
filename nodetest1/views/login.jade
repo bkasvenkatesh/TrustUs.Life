@@ -1,0 +1,16 @@
+header
+  title TrustUs.Life
+
+  link(rel="stylesheet", href="stylesheets/form.css")
+
+  meta(charset="UTF-8")
+body
+    h1= title
+    form#formLogIn(name="login",method="post",action="/loginverify")
+          input#inputE-mail(type="text", placeholder="Enter e-mail", name="email")
+          br
+          br
+          input#inputPassword(type="password", placeholder="Password", name="passwd")
+          br
+          br
+          button#btnLogin(type="submit") Log In
