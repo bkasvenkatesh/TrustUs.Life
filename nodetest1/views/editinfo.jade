@@ -1,0 +1,18 @@
+header
+	title TrustUs.Life
+	link(rel="stylesheet", href="stylesheets/form.css")
+	meta(charset="UTF-8")
+body
+	h1= title
+	form#formAddUser(name="addinfo",method="post",action="/updateinfo")
+		input(type="hidden",name="row_id",value="#{row._id}")
+		input#inputWebsite(type="text", placeholder="#{row.website}", name="website")
+		br
+		br
+		input#inputUserName(type="text", placeholder="#{row.username}", name="username")
+		br
+		br
+		input#inputPassword(type="text", placeholder="#{row.password}", name="passwd")
+		br
+		br
+		button#btnSubmit(type="submit") Submit
