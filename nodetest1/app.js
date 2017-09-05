@@ -23,9 +23,11 @@ var index = require('./routes/index');
 var app = express();
 // This line is from the Node.js HTTPS documentation.
 var options = {
-  key: fs.readFileSync('keys/node-key.pem'),
-  cert: fs.readFileSync('keys/node-cert.cert')
+  key: fs.readFileSync('keys/privkey.pem'),
+  cert: fs.readFileSync('keys/fullchain.pem')
 };
+
+app.use(require('helmet')());
 // Create an HTTP service.
 http.createServer(app).listen(80);
 
@@ -67,13 +69,13 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
+/*
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
     next();
 
-});
+});*/
 
 app.use('/', index);
 //app.use('/users', users);
