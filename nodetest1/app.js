@@ -23,15 +23,15 @@ var index = require('./routes/index');
 var app = express();
 // This line is from the Node.js HTTPS documentation.
 var options = {
-  key: fs.readFileSync('keys/node-key.pem'),
-  cert: fs.readFileSync('keys/node-cert.cert')
+  key: fs.readFileSync('keys/privkey.pem'),
+  cert: fs.readFileSync('keys/fullchain.pem')
 };
 // Create an HTTP service.
-http.createServer(app).listen(80);
+//http.createServer(app).listen(80);
 
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(443);
-
+https.createServer(options, app).listen(8443);
+app.use(require('helmet')());
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
