@@ -10,7 +10,7 @@ block content
 				p Website
 			th
 				p Username
-			th
+			th(colspan="2")
 				p Password
 		each user, i in information
 			tr
@@ -26,7 +26,7 @@ block content
 						p #{user.password}
 					td
 						button#btnUpdate(type="submit") Edit
-			
+
 	h2 Add New Info
 	form#formAddUser(name="addinfo",method="post",action="/addinfo")
 		input#inputWebsite(type="text", placeholder="website", name="website")

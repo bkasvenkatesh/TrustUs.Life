@@ -53,12 +53,12 @@ table{
 }
 table td, table th{
   padding: 8px;
+  min-width:100px;
   border: 1px solid black;
 }
 table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    text-align: left;
     background-color: #4CAF50;
     color: white;
 }
