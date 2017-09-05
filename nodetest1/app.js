@@ -1,4 +1,8 @@
 var express = require('express');
+var https = require('https');
+var http = require('http');
+var fs = require('fs');
+
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -8,8 +12,8 @@ var session = require('express-session');
 var mongo = require('mongodb');
 //var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
-var monk = require('monk');
-var db = monk('localhost:27017/nodetest1');
+//var monk = require('monk');
+//var db = monk('localhost:27017/nodetest1');
 //var uri = "mongodb://trustuslife:india123@ourbackend-shard-00-00-rcuwr.mongodb.net:27017,ourbackend-shard-00-01-rcuwr.mongodb.net:27017,ourbackend-shard-00-02-rcuwr.mongodb.net:27017/UserInfo?ssl=true&replicaSet=OurBackend-shard-0&authSource=admin";
 	
 
@@ -17,9 +21,16 @@ var index = require('./routes/index');
 //var users = require('./routes/users');
 
 var app = express();
+// This line is from the Node.js HTTPS documentation.
+var options = {
+  key: fs.readFileSync('keys/node-key.pem'),
+  cert: fs.readFileSync('keys/node-cert.cert')
+};
+// Create an HTTP service.
+http.createServer(app).listen(80);
 
-//app.use(express.cookieParser());
-
+// Create an HTTPS service identical to the HTTP service.
+https.createServer(options, app).listen(443);
 
 app.use(session({
   secret: 'keyboard cat',
