@@ -2,7 +2,7 @@
 
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -35,9 +35,28 @@ p{
   top: 10px;
   left: 40%;
 }
-table,tr,th,td{
-  text-align: center;
-  padding: 1px;
+
+table{
+  border-collapse: collapse;
   border: 1px solid black;
+  opacity: 0.9;
+  text-align: center;
   font-size: 10px;
+}
+table td, table th{
+  padding: 8px;
+  border: 1px solid black;
+}
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+table tr{background-color: white;}
+table tr:nth-child(even){background-color: #afafaf;}
+table tr:hover {background-color: #ddd;}
+table p{
+  font-size: 18px;
 }
