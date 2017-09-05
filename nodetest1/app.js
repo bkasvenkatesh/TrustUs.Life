@@ -26,12 +26,14 @@ var options = {
   key: fs.readFileSync('keys/privkey.pem'),
   cert: fs.readFileSync('keys/fullchain.pem')
 };
+
+app.use(require('helmet')());
 // Create an HTTP service.
-//http.createServer(app).listen(80);
+http.createServer(app).listen(80);
 
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(8443);
-app.use(require('helmet')());
+https.createServer(options, app).listen(443);
+
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
@@ -67,13 +69,13 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-
+/*
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
     next();
 
-});
+});*/
 
 app.use('/', index);
 //app.use('/users', users);
